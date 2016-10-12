@@ -25,6 +25,17 @@ set fileformats=unix,dos,mac
 
 imap <c-j> <esc>
 
+" 矢印キーを無効にする
+noremap <Up> <Nop>
+noremap <Down> <Nop>
+noremap <Left> <Nop>
+noremap <Right> <Nop>
+inoremap <Up> <Nop>
+inoremap <Down> <Nop>
+inoremap <Left> <Nop>
+inoremap <Right> <Nop>
+
+" 画面分割
 nnoremap s <Nop>
 nnoremap sj <C-w>j
 nnoremap sk <C-w>k
