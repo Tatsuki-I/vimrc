@@ -22,6 +22,7 @@ set wildmenu
 set fileencodings=iso-2022-jp,euc-jp,sjis,utf-8,cp932
 set fileformats=unix,dos,mac
 
+nnoremap <silent><C-e> :NERDTreeToggle<CR>
 
 imap <c-j> <esc>
 
