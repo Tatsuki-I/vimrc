@@ -3,6 +3,7 @@ colorscheme molokai
 set t_Co=256
 set number
 set cursorline
+set expandtab
 set tabstop=4
 set shiftwidth=4
 set ruler
