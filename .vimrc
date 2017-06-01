@@ -1,8 +1,11 @@
 syntax on
-colorscheme molokai
+colorscheme hybrid
+hi LineNr ctermbg=3 ctermfg=3
+hi CursorLineNr ctermbg=4 ctermfg=0
+set cursorline
+hi clear CursorLine
 set t_Co=256
 set number
-set cursorline
 set expandtab
 set tabstop=4
 set shiftwidth=4
@@ -19,15 +22,15 @@ set smarttab
 set ignorecase
 set smartcase
 set wildmenu
-set encoding=utf-8
+"set encoding=utf-8
 set fileencodings=iso-2022-jp,euc-jp,sjis,utf-8,cp932
 set fileformats=unix,dos,mac
 
-nnoremap <silent><C-e> :NERDTreeToggle<CR>
+let g:seiya_auto_enable=1
+
 
 imap <c-j> <esc>
 
-" 矢印キーを無効にする
 noremap <Up> <Nop>
 noremap <Down> <Nop>
 noremap <Left> <Nop>
@@ -65,65 +68,43 @@ nnoremap sq :<C-u>q<CR>
 nnoremap sQ :<C-u>bd<CR>
 nnoremap sb :<C-u>Unite buffer_tab -buffer-name=file<CR>
 nnoremap sB :<C-u>Unite buffer -buffer-name=file<CR>
-nnoremap Y y$
-nnoremap <silent><C-e> :NERDTreeToggle<CR>
 
-"NeoBundle Settings
+
+set nocompatible
+filetype plugin indent off
 
 if has('vim_starting')
-    if &compatible
-        set nocompatible
-    endif
-    set runtimepath^=/home/Tatsuki/.vim/bundle/neobundle.vim/
+  set runtimepath+=~/.vim/bundle/neobundle.vim
+  call neobundle#begin(expand('~/.vim/bundle'))
 
-endif
-            
-call neobundle#begin(expand('/home/Tatsuki/.vim/bundle'))
 NeoBundleFetch 'Shougo/neobundle.vim'
-NeoBundle 'Shougo/unite.vim'
 NeoBundle 'scrooloose/nerdtree'
-NeoBundle 'Shougo/neocomplete.vim'
+NeoBundle 'Shougo/neosnippet'
+NeoBundle 'Shougo/neosnippet-snippets'
 NeoBundle 'Shougo/unite.vim'
-NeoBundle 'Shougo/vimproc', {
-      \ 'build' : {
-      \     'windows' : 'make -f make_mingw32.mak',
-      \     'cygwin' : 'make -f make_cygwin.mak',
-      \     'mac' : 'make -f make_mac.mak',
-      \     'unix' : 'gmake -f make_unix.mak',
-      \    },
-      \ }
-NeoBundle 'Shougo/vimshell.vim'
-NeoBundle 'plasticboy/vim-markdown'
-NeoBundle 'kannokanno/previm'
-NeoBundle 'tyru/open-browser.vim'
+"  NeoBundle 'auther/pluginname'
+NeoBundle 'Shougo/neocomplete.vim'
+NeoBundle 'Shougo/vimproc.vim', {
+            \ 'build' : {
+            \ 'windows' : 'make -f make_mingw32.mak',
+            \ 'cygwin' : 'make -f make_cygwin.mak',
+            \ 'mac' : 'make -f make_mac.mak',
+            \ 'unix' : 'make -f make_unix.mak',
+            \ },
+            \ }
 NeoBundle 'justmao945/vim-clang'
+NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'Shougo/neoinclude.vim'
-NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'Shougo/vimshell'
+NeoBundle 'kovisoft/slimv'
+NeoBundle 'miyakogi/seiya.vim'
+NeoBundle 'elixir-lang/vim-elixir'
+NeoBundle 'kana/vim-filetype-haskell'
+NeoBundle 'eagletmt/ghcmod-vim'
+NeoBundle 'ujihisa/neco-ghc'
 
-call neobundle#end()
-
-filetype plugin indent on
-                 
-NeoBundleCheck
-
-
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
-
-"imap <expr><TAB>
-" \ pumvisible() ? "\<C-n>" :
-" \ neosnippet#expandable_or_jumpable() ?
-" \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-
-if has('conceal')
-  set conceallevel=2 concealcursor=niv
-endif
-
-au BufRead,BufNewFile *.md set filetype=markdown
-
+  call neobundle#end()
+endif 
 
 "Note: This option must be set in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
 " Disable AutoComplPop.
@@ -201,6 +182,7 @@ let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 
 
 
+
 " 'Shougo/neocomplete.vim' {{{
 let g:neocomplete#enable_at_startup = 1
 if !exists('g:neocomplete#force_omni_input_patterns')
@@ -212,6 +194,7 @@ let g:neocomplete#force_omni_input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\
 """}}}
 
 " 'justmao945/vim-clang' {{{
+
 " disable auto completion for vim-clanG
 let g:clang_auto = 0
 let g:clang_complete_auto = 0
@@ -248,6 +231,6 @@ let g:clang_cpp_options = '-std=c++11 -stdlib=libc++'
 " }}}
 
 
-set laststatus=2
-set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ \[ENC=%{&fileencoding}]%P
+nnoremap <silent><C-e> :NERDTreeToggle<CR>
 
+filetype plugin indent on
