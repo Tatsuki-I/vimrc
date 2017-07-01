@@ -6,6 +6,7 @@ hi CursorLineNr ctermbg=4 ctermfg=0
 set cursorline
 hi clear CursorLine
 set guifont=Ricty\ for\ Powerline:h24
+set relativenumber
 set number
 set expandtab
 set tabstop=4
@@ -23,11 +24,14 @@ set smarttab
 set ignorecase
 set smartcase
 set wildmenu
-"set encoding=utf-8
+set encoding=utf-8
 set fileencodings=iso-2022-jp,euc-jp,sjis,utf-8,cp932
 set fileformats=unix,dos,mac
 
 let g:seiya_auto_enable=1
+
+let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 
 " statusline表示
 set laststatus=2
@@ -71,6 +75,15 @@ nnoremap sb :<C-u>Unite buffer_tab -buffer-name=file<CR>
 nnoremap sB :<C-u>Unite buffer -buffer-name=file<CR>
 
 
+nnoremap <F3> :<C-u>setlocal relativenumber!<CR>
+
+nnoremap <silent> い i
+nnoremap <silent> あ a
+nnoremap <silent> お o
+nnoremap <silent> っｄ dd
+nnoremap <silent> う u
+nnoremap <silent> ：ｗｑ :wq
+
 set nocompatible
 filetype plugin indent off
 
@@ -106,12 +119,14 @@ NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'airblade/vim-gitgutter'
 
 NeoBundle 'elixir-lang/vim-elixir'
-NeoBundle 'kana/vim-filetype-haskell'
 NeoBundle 'eagletmt/ghcmod-vim'
 NeoBundle 'ujihisa/neco-ghc'
+NeoBundle 'dan-t/vim-hsimport'
+NeoBundle 'dag/vim2hs'
+NeoBundle 'eagletmt/ghcmod-vim'
 
   call neobundle#end()
-endif 
+endif
 
 "Note: This option must be set in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
 " Disable AutoComplPop.
@@ -193,7 +208,7 @@ let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 " 'Shougo/neocomplete.vim' {{{
 let g:neocomplete#enable_at_startup = 1
 if !exists('g:neocomplete#force_omni_input_patterns')
-	let g:neocomplete#force_omni_input_patterns = {}
+    let g:neocomplete#force_omni_input_patterns = {}
 endif
 let g:neocomplete#force_overwrite_completefunc = 1
 let g:neocomplete#force_omni_input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
@@ -399,7 +414,34 @@ let g:quickrun_config = {
 \   },
 \}
 
+let g:quickrun_config = {
+\    "_" : {
+\        'runner'    : 'vimproc',
+\        'runner/vimproc/updatetime' : 60,
+\        'outputter' : 'error',
+\        'outputter/error/success' : 'buffer',
+\        'outputter/error/error'   : 'quickfix',
+\        'outputter/buffer/split'  : ':rightbelow 8sp',
+\        'outputter/buffer/close_on_empty' : 1,
+\    },
+\   'haskell' : { 'type' : 'haskell/stack' },
+\   'haskell/stack' : {
+\       'command' : 'stack',
+\       'exec' : '%c %o %s %a',
+\       'cmdopt' : 'runghc',
+\   },
+\}
+
 let g:quickrun_no_default_key_mappings = 1
 nnoremap <leader>r :write<CR>:QuickRun -mode n<CR>
 xnoremap <leader>r :<C-U>write<CR>gv:QuickRun -mode v<CR>
 nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
+
+let g:haskell_quasi         = 0
+let g:haskell_interpolation = 0
+let g:haskell_regex         = 0
+let g:haskell_jmacro        = 0
+let g:haskell_shqq          = 0
+let g:haskell_sql           = 0
+let g:haskell_json          = 0
+let g:haskell_xml           = 0
