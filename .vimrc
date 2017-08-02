@@ -1,10 +1,12 @@
 syntax on
 set t_Co=256
+set cursorline
+autocmd ColorScheme * highlight Normal ctermbg=none
+set background=dark
 colorscheme hybrid
 hi LineNr ctermfg=3
 hi CursorLineNr ctermbg=4 ctermfg=0
-set cursorline
-hi clear CursorLine
+hi CursorLine ctermbg=0
 set guifont=Ricty\ for\ Powerline:h24
 set relativenumber
 set number
@@ -27,8 +29,20 @@ set wildmenu
 set encoding=utf-8
 set fileencodings=iso-2022-jp,euc-jp,sjis,utf-8,cp932
 set fileformats=unix,dos,mac
+set textwidth=0
+set colorcolumn=80
+hi ColorColumn ctermbg=1
 
-let g:seiya_auto_enable=1
+highlight link OverLength Error
+match OverLength /\%>80v.\+/
+
+set list
+set listchars=tab:»-,trail:-,nbsp:%,eol:↲
+
+"let g:seiya_auto_enable=1
+
+noremap! ^H <BS>
+noremap! ^D <DEL>
 
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 let &t_EI = "\<Esc>]50;CursorShape=0\x7"
@@ -74,7 +88,6 @@ nnoremap sQ :<C-u>bd<CR>
 nnoremap sb :<C-u>Unite buffer_tab -buffer-name=file<CR>
 nnoremap sB :<C-u>Unite buffer -buffer-name=file<CR>
 
-
 nnoremap <F3> :<C-u>setlocal relativenumber!<CR>
 
 nnoremap <silent> い i
@@ -112,6 +125,7 @@ NeoBundle 'Shougo/neoinclude.vim'
 NeoBundle 'Shougo/vimshell'
 NeoBundle 'kovisoft/slimv'
 NeoBundle 'miyakogi/seiya.vim'
+NeoBundle 'terryma/vim-multiple-cursors'
 
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'cocopon/lightline-hybrid.vim'
@@ -122,11 +136,12 @@ NeoBundle 'elixir-lang/vim-elixir'
 NeoBundle 'eagletmt/ghcmod-vim'
 NeoBundle 'ujihisa/neco-ghc'
 NeoBundle 'dan-t/vim-hsimport'
-NeoBundle 'dag/vim2hs'
+"NeoBundle 'dag/vim2hs'
+NeoBundle 'parsonsmatt/vim2hs'
 NeoBundle 'eagletmt/ghcmod-vim'
 
   call neobundle#end()
-endif
+endif 
 
 "Note: This option must be set in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
 " Disable AutoComplPop.
@@ -208,7 +223,7 @@ let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 " 'Shougo/neocomplete.vim' {{{
 let g:neocomplete#enable_at_startup = 1
 if !exists('g:neocomplete#force_omni_input_patterns')
-    let g:neocomplete#force_omni_input_patterns = {}
+	let g:neocomplete#force_omni_input_patterns = {}
 endif
 let g:neocomplete#force_overwrite_completefunc = 1
 let g:neocomplete#force_omni_input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
@@ -395,24 +410,6 @@ function! MyCharCode()
   return "'". char ."' ". nr
 endfunction
 
-
-let g:quickrun_config = {
-\    "_" : {
-\        'runner'    : 'vimproc',
-\        'runner/vimproc/updatetime' : 60,
-\        'outputter' : 'error',
-\        'outputter/error/success' : 'buffer',
-\        'outputter/error/error'   : 'quickfix',
-\        'outputter/buffer/split'  : ':rightbelow 8sp',
-\        'outputter/buffer/close_on_empty' : 1,
-\    },
-\   'haskell' : { 'type' : 'haskell/stack' },
-\   'haskell/stack' : {
-\       'command' : 'stack',
-\       'exec' : '%c %o %s %a',
-\       'cmdopt' : 'runghc',
-\   },
-\}
 
 let g:quickrun_config = {
 \    "_" : {
